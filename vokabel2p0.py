@@ -8,6 +8,22 @@ Created on Thu Apr 30 09:57:31 2020
 import sqlite3
 import MySQLdb
 
+def create_remote_connection():
+    """ create a database connection to a SQLite database """
+    conn = None
+    try:
+        conn = MySQLdb.connect(
+            host = 'db4free.net', 
+            user = 'jayjay123', 
+            passwd = 'yzm][h20+}rNV6y=', 
+            db = 'vocabulary', 
+            port = 3306)
+        return conn
+    except sqlite3.Error as e:
+        print(e) 
+        
+    return conn
+
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
     conn = None
@@ -56,7 +72,6 @@ def insert_new_vocabulary(conn, english, deutsch):
     else:
         return 0
     
-
 def get_vocabulary_list(conn, lection):
     """
     calculate the ratio between won and played turnaments
@@ -79,7 +94,6 @@ def get_vocabulary_list(conn, lection):
         vocabulary_list.append(word)
     
     return vocabulary_list
-
 
 def print_vocabulary_list(vocabulary_list):
     """
@@ -119,6 +133,7 @@ def show_menu(conn):
 if __name__ == "__main__":
         
     conn = create_connection(r"vocabulary.db")
+    #conn = create_remote_connection()
     create_tables(conn)
     
     show_menu(conn)
